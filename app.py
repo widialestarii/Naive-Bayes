@@ -7,7 +7,7 @@ st.set_page_config(page_title='Classifier Tabular', page_icon=':bar_chart:', lay
  
 @st.cache_resource
 def load_artefak():
-    model        = joblib.load('model.pkl')
+    model        = joblib.load('lr_best.pkl')
     preprocessor = joblib.load('preprocessor.pkl')
     selector     = joblib.load('selector.pkl')
     le           = joblib.load('label_encoder.pkl')
@@ -30,14 +30,14 @@ col1, col2 = st.columns(2)
 input_user = {}
  
 with col1:
-    st.markdown('**Fitur Numerik**')
+    st.markdown('*Fitur Numerik*')
     for kol in NUM_COLS:
         input_user[kol] = st.number_input(
             label=kol, value=0.0, step=0.1, format='%.4f', key=f'num_{kol}'
         )
  
 with col2:
-    st.markdown('**Fitur Kategorikal**')
+    st.markdown('*Fitur Kategorikal*')
     for kol in CAT_COLS:
         # Default: text input (peserta bisa ganti ke selectbox kalau tahu nilai uniknya)
         input_user[kol] = st.text_input(label=kol, value='', key=f'cat_{kol}')
@@ -58,7 +58,7 @@ if st.button('Prediksi', type='primary', use_container_width=True):
         kelas_pred = le.classes_[pred]
  
         # Tampilkan hasil
-        st.success(f'Hasil prediksi: **{kelas_pred}**')
+        st.success(f'Hasil prediksi: *{kelas_pred}*')
  
         cm1, cm2 = st.columns(2)
         cm1.metric('Probabilitas kelas positif', f'{proba:.4f}')
